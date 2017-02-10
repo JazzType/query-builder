@@ -1,64 +1,73 @@
-<ScreenManagement>:
-	id: screen_manager
-	transition: SwapTransition()
-	QueryBuilderScreen:
-	ResultScreen:
-
-<QueryBuilderScreen>:	
-	name: 'qbscreen'
-	
-	BoxLayout:
-		orientation: 'horizontal'
-		padding: [10, 10, 10, 10]
-		background_color: (0, 0, 0, 0.2)
-		id: main_layout
-		qb_button: qbbutton
-		BoxLayout:
-			size_hint: (0.1, 1)
-			orientation: 'vertical'	
-			Label:
-				text: 'Tournament'
-				size_hint: (1, 0.1)
-			Image:
-				source: '/home/akash/Kivy/A/images/fifa_wc2014_logo.png'
-				border: (None, None, None, None)
-				size_hint: (1, 0.5)				
-			BoxLayout:
-				size_hint: (1, 0.4)
-				orientation: 'vertical'
-				Label:
-					text: 'Sub-events'
-				BoxLayout:
-					orientation: 'horizontal'
-					Label:
-						text: 'Kicking'
-					Label:
-						text: 'Catching'
-
-		BoxLayout:			
-			orientation: 'vertical'
-			size_hint: (0.8, 1)
+<QueryBuilder>:
+	screen_manager: screen_manager
+	ScreenManager:
+		id: screen_manager
+		
+		#QueryBuilderScreen
+		Screen:	
+			name: 'QueryBuilderScreen'
 			
-			VideoPlayer:
-				size_hint: (1, 0.95)
+			BoxLayout:
+				orientation: 'horizontal'
 				padding: [10, 10, 10, 10]
-				source: '/home/akash/unDung/Test/video.mp4'
+				background_color: (0, 0, 0, 0.2)
+				id: main_layout
+				qb_button: qbbutton
+				BoxLayout:
+					size_hint: (0.1, 1)
+					orientation: 'vertical'	
+					Label:
+						text: 'Tournament'
+						size_hint: (1, 0.1)
+					Image:
+						source: '/home/akash/Kivy/A/images/fifa_wc2014_logo.png'
+						border: (None, None, None, None)
+						size_hint: (1, 0.5)				
+					BoxLayout:
+						size_hint: (1, 0.4)
+						orientation: 'vertical'
+						Label:
+							text: 'Sub-events'
+						BoxLayout:
+							orientation: 'horizontal'
+							Label:
+								text: 'Kicking'
+							Label:
+								text: 'Catching'
+
+				BoxLayout:			
+					orientation: 'vertical'
+					size_hint: (0.8, 1)
+					
+					VideoPlayer:
+						size_hint: (1, 0.95)
+						padding: [10, 10, 10, 10]
+						source: '/home/akash/unDung/Test/video.mp4'
 
 
-			Button:
-				text: 'Build a Query'
-				id: qbbutton
-				on_press: root.update_button(self, main_layout)
-				on_release: app.root.current: 'resscreen';print("on_release")
-				size_hint: (1, 0.05)
+					Button:
+						text: 'Build a Query'
+						id: qbbutton
+						on_press: root.update_button(self, main_layout)
+						on_release: root.change_screen('ResultScreen');print("on_release")
+						size_hint: (1, 0.05)
+		
+		#ResultScreen
+		Screen:
+			name: 'ResultScreen'
+			
+			BoxLayout:
+				orientation:'vertical'
+				size_hint:(.2,.2)
+				pos: (400,75)	
+				ToggleButton:
+					text: "Player1"
+					id: player1
+				ToggleButton:
+					text: "Player2"
+					id: player2
+				ToggleButton:
+					text: "Player3"
+					id: player3
 
-<ResultScreen>:
-	name: 'resscreen'
-	
-	BoxLayout:
-		Label:
-			text: 'Sample label text'
-			size_hint: (1, 0.1)
-		Button:
-			text: 'New Screen button'
-			on_release: print("New button clicked")
+				
