@@ -1,17 +1,18 @@
 <QueryBuilder>:
 	screen_manager: screen_manager
+	video_player:video_player
+	main_layout: mainlayout
 	ScreenManager:
 		id: screen_manager
 		
 		#QueryBuilderScreen
 		Screen:	
 			name: 'QueryBuilderScreen'
-			
 			BoxLayout:
 				orientation: 'horizontal'
 				padding: [10, 10, 10, 10]
 				background_color: (0, 0, 0, 0.2)
-				id: main_layout
+				id: mainlayout
 				qb_button: qbbutton
 				BoxLayout:
 					size_hint: (0.1, 1)
@@ -40,16 +41,16 @@
 					size_hint: (0.8, 1)
 					
 					VideoPlayer:
+						id: video_player
 						size_hint: (1, 0.95)
 						padding: [10, 10, 10, 10]
-						source: '/home/akash/unDung/Test/video.mp4'
+						source: '/home/Downloads/wws1e9.mkv'
 
 
 					Button:
 						text: 'Build a Query'
 						id: qbbutton
-						on_press: root.update_button(self, main_layout)
-						on_release: root.change_screen('ResultScreen');print("on_release")
+						on_press: root.update_button(mainlayout)						
 						size_hint: (1, 0.05)
 		
 		#ResultScreen
