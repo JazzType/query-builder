@@ -100,6 +100,7 @@ class Neo4jInterface():
 		self.QueryBuilderObject.insert_info(time_tuple, players, ball , res_layout)
 	
 	def init(self, pause_time, main_layout, res_layout):
+		res_layout.clear_widgets()
 		end_times = self.session.run("MATCH (n) WHERE EXISTS(n.end_time) RETURN DISTINCT 'node' as element, n.end_time AS end_time UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.end_time) RETURN DISTINCT 'relationship' AS element, r.end_time AS end_time")
 		end_times = [float(record['end_time']) for record in end_times]
 		start_times = self.session.run("MATCH (n) WHERE EXISTS(n.start_time) RETURN DISTINCT 'node' as element, n.start_time AS start_time UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.start_time) RETURN DISTINCT 'relationship' AS element, r.start_time AS start_time")
