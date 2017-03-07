@@ -1,9 +1,11 @@
+#: import sm kivy.uix.screenmanager
 <QueryBuilder>:
 	screen_manager: screen_manager
 	video_player:video_player
 	main_layout: mainlayout
 	res_layout: res_layout
 	ScreenManager:
+		transition: sm.NoTransition()
 		id: screen_manager
 		#QueryBuilderScreen
 		Screen:	
@@ -45,7 +47,7 @@
 						id: video_player
 						size_hint: (1, 0.95)
 						padding: [10, 10, 10, 10]
-						source:  "F:\Torrents\X Men Apocalypse\X-Men.Apocalypse.2016.720p.BluRay.x265.ShAaNiG.mkv"
+						source:  "/home/akash/VideoCricAnalysis-master/videos/Full_Match.avi"
 
 
 					Button:
@@ -65,4 +67,8 @@
 			BoxLayout:
 				id: res_layout
 				orientation:'horizontal'
+				Button:
+					text: 'Go Back'
+					on_release: root.change_screen('QueryBuilderScreen')
 				
+
