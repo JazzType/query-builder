@@ -1,12 +1,12 @@
 import kivy
 import time
-import numpy
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.properties import ObjectProperty
-from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
+from kivy.uix.screenmanager import ScreenManager, Screen
 from neo4j.v1 import GraphDatabase, basic_auth
 
 class QueryBuilder(BoxLayout):
@@ -45,15 +45,20 @@ class QueryBuilder(BoxLayout):
 		info_column = BoxLayout(orientation = "vertical")
 		info_column.add_widget(Label(text = "Over : " + ball))
 		info_column.add_widget(Label(text = "Batsman : " + players[0] + " - Bowler : " + players[1]))
-		info_column.add_widget(Label(text = "Event Timestamps : "  + str(time_tuple[0]) + " - " + str(time_tuple[1]) ))
+		info_column.add_widget(Label(text = "Event Timestamps : "  + str(time_tuple[0]) + " - " + str(time_tuple[1])))
+		#backBtn = Button(text='Go Back')
+		#backBtn.bind(on_press=self.toQueryBuilder)
+		#info_column.add_widget(backBtn)
 		res_layout.add_widget(info_column)
-		
+
+	def toQueryBuilder(self, obj):
+		self.change_screen('QueryBuilderScreen')
 class QBApp(App):
 	def build(self):
 		return QueryBuilder()		
 
 class Neo4jInterface():
-	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "aditya"))
+	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "password"))
 	session = driver.session()
 	QueryBuilderObject = QueryBuilder()
 	def binary_search(self, tuple_array, pause_time):
