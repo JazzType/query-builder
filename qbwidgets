@@ -1,0 +1,19 @@
+<QueryBuilder>(Root):
+  ScreenManager:
+    Screen:(QBScreen):
+      BoxLayout:
+        BoxLayout:
+          Label:
+          Image:
+          BoxLayout:
+            Label:
+            BoxLayout:
+              Label:
+              Label:
+        BoxLayout:
+          VideoPlayer:
+          Button:
+          Button:
+    Screen(ResScreen):
+      BoxLayout:
+        Button:
