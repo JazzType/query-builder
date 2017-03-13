@@ -17,3 +17,15 @@
     Screen(ResScreen):
       BoxLayout:
         Button:
+
+
+Distinct Widgets:
+
+Root:
+ScreenManager
+Screen
+BoxLayout
+Label
+Image
+VideoPlayer
+Button
