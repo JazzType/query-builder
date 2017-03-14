@@ -5,62 +5,65 @@
 	main_layout: mainlayout
 	res_layout: res_layout
 	ScreenManager:
-		transition: sm.NoTransition()
+		transition: sm.SwapTransition()
 		id: screen_manager
 		#QueryBuilderScreen
 		Screen:	
 			name: 'QueryBuilderScreen'
-			BoxLayout:
-				orientation: 'horizontal'
-				padding: [10, 10, 10, 10]
-				background_color: (0, 0, 0, 0.2)
-				id: mainlayout
-				qb_button: qbbutton
-				next_button: nextbutton
+			Popup:
+				title: 'Test Popup'
+				size_hint: (1, 1)
 				BoxLayout:
-					size_hint: (0.1, 1)
-					orientation: 'vertical'	
-					Label:
-						text: 'Tournament'
-						size_hint: (1, 0.1)
-					Image:
-						source: '/home/akash/Kivy/A/images/fifa_wc2014_logo.png'
-						border: (None, None, None, None)
-						size_hint: (1, 0.5)				
+					orientation: 'horizontal'
+					padding: [10, 10, 10, 10]
+					background_color: (0, 0, 0, 0.2)
+					id: mainlayout
+					qb_button: qbbutton
+					next_button: nextbutton
 					BoxLayout:
-						size_hint: (1, 0.4)
-						orientation: 'vertical'
+						size_hint: (0.1, 1)
+						orientation: 'vertical'	
 						Label:
-							text: 'Sub-events'
+							text: 'Tournament'
+							size_hint: (1, 0.1)
+						Image:
+							source: '/home/akash/Kivy/A/images/fifa_wc2014_logo.png'
+							border: (None, None, None, None)
+							size_hint: (1, 0.5)				
 						BoxLayout:
-							orientation: 'horizontal'
+							size_hint: (1, 0.4)
+							orientation: 'vertical'
 							Label:
-								text: 'Kicking'
-							Label:
-								text: 'Catching'
+								text: 'Sub-events'
+							BoxLayout:
+								orientation: 'horizontal'
+								Label:
+									text: 'Kicking'
+								Label:
+									text: 'Catching'
 
-				BoxLayout:			
-					orientation: 'vertical'
-					size_hint: (0.8, 1)
-					
-					VideoPlayer:
-						id: video_player
-						size_hint: (1, 0.95)
-						padding: [10, 10, 10, 10]
-						source:  "/home/akash/VideoCricAnalysis-master/videos/Full_Match.avi"
-
-
-					Button:
-						text: 'Build a Query'
-						id: qbbutton
-						on_press: root.update_button(mainlayout,res_layout)						
-						size_hint: (0.95, 0.05)
+					BoxLayout:			
+						orientation: 'vertical'
+						size_hint: (0.8, 1)
 						
-					Button:
-						text: 'Next'
-						id: nextbutton
-						on_press: root.change_screen('ResultScreen')
-						size_hint: (1,0.05)
+						VideoPlayer:
+							id: video_player
+							size_hint: (1, 0.95)
+							padding: [10, 10, 10, 10]
+							source:  "/home/akash/VideoCricAnalysis-master/videos/Full_Match.avi"
+
+
+						Button:
+							text: 'Build a Query'
+							id: qbbutton
+							on_press: root.update_button()						
+							size_hint: (0.95, 0.05)
+							
+						Button:
+							text: 'Next'
+							id: nextbutton
+							on_press: root.change_screen('ResultScreen')
+							size_hint: (1,0.05)
 		#ResultScreen
 		Screen:
 			name: 'ResultScreen'
