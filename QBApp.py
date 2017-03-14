@@ -117,7 +117,7 @@ class QueryBuilder(BoxLayout):
 		self.change_screen('QueryBuilderScreen')
 class QBApp(App):
 	def build(self):
-		atlas = Atlas("material.atlas")
+		atlas = Atlas("assets/material.atlas")
 		Cache.append("kv.atlas", 'data/images/defaulttheme', atlas)
 		#super(QBApp, self).build()
 		return QueryBuilder()		
