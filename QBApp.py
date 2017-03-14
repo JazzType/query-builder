@@ -8,6 +8,8 @@ from kivy.uix.button import Button
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from neo4j.v1 import GraphDatabase, basic_auth
+from kivy.cache import Cache
+from kivy.atlas import Atlas
 
 class QueryBuilder(BoxLayout):
 	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "password"))
@@ -19,6 +21,9 @@ class QueryBuilder(BoxLayout):
 	video_player = ObjectProperty()
 	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 1))
 	res_layout = ObjectProperty()
+
+	Label.color = (0, 0, 0, 1)
+	Button.background_color: (241, 240, 240, 0.1)
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
 		high = len(tuple_array)
@@ -112,6 +117,9 @@ class QueryBuilder(BoxLayout):
 		self.change_screen('QueryBuilderScreen')
 class QBApp(App):
 	def build(self):
+		atlas = Atlas("material.atlas")
+		Cache.append("kv.atlas", 'data/images/defaulttheme', atlas)
+		#super(QBApp, self).build()
 		return QueryBuilder()		
 
 		
