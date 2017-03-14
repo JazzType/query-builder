@@ -23,7 +23,8 @@ class QueryBuilder(BoxLayout):
 	res_layout = ObjectProperty()
 
 	Label.color = (0, 0, 0, 1)
-	Button.background_color: (241, 240, 240, 0.1)
+	#Button.background_color= (119, 244, 128, 1)
+
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
 		high = len(tuple_array)
@@ -78,8 +79,7 @@ class QueryBuilder(BoxLayout):
 		self.populate_objects(time_tuple)
 		self.get_event_details(time_tuple)
 		self.get_best_batsmen(time_tuple)
-		self.get_best_bowlers(time_tuple)
-	
+		self.get_best_bowlers(time_tuple)	
 
 	def update_button(self):
 		self.init(self.video_player.position)
@@ -118,8 +118,7 @@ class QueryBuilder(BoxLayout):
 class QBApp(App):
 	def build(self):
 		atlas = Atlas("assets/material.atlas")
-		Cache.append("kv.atlas", 'data/images/defaulttheme', atlas)
-		#super(QBApp, self).build()
+		Cache.append("kv.atlas", 'data/images/defaulttheme', atlas)		
 		return QueryBuilder()		
 
 		
