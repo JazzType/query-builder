@@ -22,9 +22,8 @@ class QueryBuilder(BoxLayout):
 	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 1))
 	res_layout = ObjectProperty()
 
-	Label.color = (0, 0, 0, 1)
-	#Button.background_color= (119, 244, 128, 1)
-
+	Label.color = (0, 0, 0, 1)	
+	#label.border
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
 		high = len(tuple_array)
@@ -105,10 +104,10 @@ class QueryBuilder(BoxLayout):
 		
 	def insert_info(self, time_tuple, players, ball):
 		info_column = BoxLayout(orientation = "vertical")
-		info_column.add_widget(Label(text = "Over : " + ball))
-		info_column.add_widget(Label(text = "Batsman : " + players[0] + " - Bowler : " + players[1]))
-		info_column.add_widget(Label(text = "Event Timestamps : "  + str(time_tuple[0]) + " - " + str(time_tuple[1])))
-		backBtn = Button(text='Go Back')
+		info_column.add_widget(Label(text = "Over : " + ball, size_hint=(1, 0.25)))
+		info_column.add_widget(Label(text = "Batsman : " + players[0] + " - Bowler : " + players[1], size_hint=(1, 0.30)))
+		info_column.add_widget(Label(text = "Event Timestamps : "  + str(time_tuple[0]) + " - " + str(time_tuple[1]), size_hint=(1, 0.30)))
+		backBtn = Button(text='Go Back', size_hint=(1, 0.05))
 		backBtn.bind(on_press=self.toQueryBuilder)
 		info_column.add_widget(backBtn)
 		self.res_layout.add_widget(info_column)

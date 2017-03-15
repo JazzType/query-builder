@@ -6,7 +6,7 @@
 	res_layout: res_layout
 	canvas.before:
 		Color:
-			rgba: (220, 220, 220, 1)
+			rgba: (246, 248, 250, 1)
 		Rectangle:
 			pos: self.pos
 			size: self.size
@@ -27,7 +27,9 @@
 					orientation: 'vertical'	
 					Label:
 						text: 'Tournament'
-						size_hint: (1, 0.1)						
+						size_hint: (1, 0.1)
+						border: (0, 0, 1, 0)
+						foreground_color: (246, 248, 250, 1)
 					Image:
 						source: '/home/akash/Kivy/A/images/fifa_wc2014_logo.png'
 						border: (None, None, None, None)
@@ -45,13 +47,12 @@
 								text: 'Catching'
 
 				BoxLayout:
-					background_color: (1, 1, 1, 1)			
 					orientation: 'vertical'
 					size_hint: (0.8, 1)
 					
 					VideoPlayer:
 						id: video_player
-						size_hint: (1, 0.95)
+						size_hint: (1, 0.90)
 						padding: [10, 10, 10, 10]
 						source:  "/home/akash/VideoCricAnalysis-master/videos/Full_Match.avi"
 
@@ -60,13 +61,14 @@
 						text: 'Build a Query'
 						id: qbbutton
 						on_press: root.update_button()						
-						size_hint: (0.95, 0.05)
+						size_hint: (1, 0.05)
+
 						
 					Button:
 						text: 'Next'						
 						id: nextbutton
 						on_press: root.change_screen('ResultScreen')
-						size_hint: (0.95,0.05)						
+						size_hint: (1,0.05)						
 		#ResultScreen
 		Screen:
 			name: 'ResultScreen'
