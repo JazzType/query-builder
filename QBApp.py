@@ -46,8 +46,12 @@ class QueryBuilder(BoxLayout):
 		return mid-1
 
 	def populate_objects(self, time_tuple):
-		ball = self.session.run("MATCH (n {start_time: '" + str(time_tuple[0]) + "', end_time:'" + str(time_tuple[1]) + "'}) RETURN DISTINCT 'node' as element, n.over as over, n.innings as innings, n.batsman as batsman, n.bowler as bowler UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.end_time) RETURN DISTINCT 'relationship' AS element, r.over as over, r.innings as innings, r.batsman as batsman, r.bowler as bowler")
-		self.insert_players([(str(record['batsman']), str(record['bowler'])) for record in ball])
+		ball = self.session.run("MATCH (b:Ball) WHERE b.start_time = '"+ str(time_tuple[0]) + "' AND b.end_time = '" + str(time_tuple[1]) + "' RETURN b.batsman as batsman, b.bowler as bowler ,b.runs as runs ,b.over as over, b.ball as ball")
+		event = ball.single()
+		players = [event['batsman'], event['bowler']]
+		ball = str(event['over']) + "." + str(event['ball'])
+		runs = str(event['runs'])
+		self.insert_players(players,ball,runs)
 			
 	def get_best_batsmen(self, time_tuple):
 		batsmen = self.session.run('MATCH (n) WHERE EXISTS(n.BestBatsman) RETURN DISTINCT "node" as element, n.BestBatsman AS BestBatsman LIMIT 25 UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.BestBatsman) RETURN DISTINCT "relationship" AS element, r.BestBatsman AS BestBatsman LIMIT 25')
@@ -78,19 +82,22 @@ class QueryBuilder(BoxLayout):
 		self.populate_objects(time_tuple)
 		self.get_event_details(time_tuple)
 		self.get_best_batsmen(time_tuple)
-		self.get_best_bowlers(time_tuple)	
+		self.get_best_bowlers(time_tuple)
 
 	def update_button(self):
+		self.video_player.state = 'pause'
 		self.init(self.video_player.position)
 
 	def change_screen(self, screen_name):		
 		self.screen_manager.current = screen_name
 		
-	def insert_players(self, player_list):		
+	def insert_players(self, player_list, ball, runs):		
 		if type(self.player_column) is BoxLayout:
 				self.player_column.clear_widgets()						
-		self.player_column.add_widget(Label(text='Batsman: ' + str(player_list[0][0])))
-		self.player_column.add_widget(Label(text='Bowler: ' + str(player_list[0][1])))
+		self.player_column.add_widget(Label(text='Batsman: ' + str(player_list[0])))
+		self.player_column.add_widget(Label(text='Bowler: ' + str(player_list[1])))
+		self.player_column.add_widget(Label(text='Over: ' + ball))
+		self.player_column.add_widget(Label(text='Runs: ' + runs))
 		if not self.toggleColumn:
 			self.main_layout.add_widget(self.player_column)			
 			self.toggleColumn = True
