@@ -4,16 +4,7 @@
 	video_player:video_player
 	main_layout: mainlayout
 	res_layout: res_layout
-	canvas.before:
-		Color:
-<<<<<<< HEAD
-			rgba: (219, 220, 220, 1)
-=======
-			rgba: (246, 248, 250, 1)
->>>>>>> 3d2b9566547d7f9b6f29a5d4f6cb99657d909868
-		Rectangle:
-			pos: self.pos
-			size: self.size
+
 	ScreenManager:
 		transition: sm.NoTransition()
 		id: screen_manager
@@ -51,6 +42,12 @@
 								text: 'Catching'
 
 				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: (246, 248, 250, 1)
+						Rectangle:
+							pos: self.pos
+							size: self.size
 					orientation: 'vertical'
 					size_hint: (0.8, 1)
 					
@@ -58,14 +55,16 @@
 						id: video_player
 						size_hint: (1, 0.90)
 						padding: [10, 10, 10, 10]
-						source:  "F:\Torrents\X Men Apocalypse\X-Men.Apocalypse.2016.720p.BluRay.x265.ShAaNiG.mkv"
+						source:  "/home/akash/VideoCricAnalysis-master/videos/Full_Match.avi"
 
 
-					Button:								
+					Button:
 						text: 'Build a Query'
 						id: qbbutton
 						on_press: root.update_button()						
 						size_hint: (1, 0.05)
+						background_normal: ''
+						background_color: (0, 255, 255, 1)
 
 						
 					Button:
@@ -73,6 +72,7 @@
 						id: nextbutton
 						on_press: root.change_screen('ResultScreen')
 						size_hint: (1,0.05)						
+
 		#ResultScreen
 		Screen:
 			name: 'ResultScreen'

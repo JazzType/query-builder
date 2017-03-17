@@ -22,8 +22,8 @@ class QueryBuilder(BoxLayout):
 	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 1))
 	res_layout = ObjectProperty()
 
-	Label.color = (0, 0, 0, 1)	
-	#label.border
+	#Label.color = (0, 0, 0, 1)	
+	
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
 		high = len(tuple_array)
