@@ -12,18 +12,20 @@ from kivy.cache import Cache
 from kivy.atlas import Atlas
 
 class QueryBuilder(BoxLayout):
-	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "password"))
+	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "aditya"))
 	session = driver.session()	
 	qb_button = ObjectProperty()
 	next_button = ObjectProperty()
 	screen_manager = ObjectProperty()
 	toggleColumn = False
+	toggleJumps = False
 	video_player = ObjectProperty()
 	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 1))
+	times_column = BoxLayout(orientation = 'vertical',size_hint=(0.1, 1))
 	res_layout = ObjectProperty()
 
-	#Label.color = (0, 0, 0, 1)	
-	
+	Label.color = (0, 0, 0, 1)	
+	#label.border
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
 		high = len(tuple_array)
@@ -68,9 +70,14 @@ class QueryBuilder(BoxLayout):
 		event = query.single()
 		players = [event['batsman'], event['bowler']]
 		ball = str(event['over']) + "." + str(event['ball'])
-		
 		self.insert_info(time_tuple, players, ball)
+		self.load_clips(players)
 	
+	def load_clips(self, players):
+		query = self.session.run("MATCH (b:Ball) WHERE b.batsman = '" + players[0] +  "' AND b.bowler = '" + players[1] + "' AND b.runs = '4' return b.start_time as start_time")
+		good_times = [str(record['start_time']) for record in query]
+		self.insert_clips(good_times)
+		
 	def init(self, pause_time):
 		self.res_layout.clear_widgets()
 		end_times = self.session.run("MATCH (n) WHERE EXISTS(n.end_time) RETURN DISTINCT 'node' as element, n.end_time AS end_time UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.end_time) RETURN DISTINCT 'relationship' AS element, r.end_time AS end_time")
@@ -118,7 +125,24 @@ class QueryBuilder(BoxLayout):
 		backBtn.bind(on_press=self.toQueryBuilder)
 		info_column.add_widget(backBtn)
 		self.res_layout.add_widget(info_column)
-
+			
+	def insert_clips(self, times):
+		print times
+		if type(self.times_column) is BoxLayout:
+			self.times_column.clear_widgets()
+		for i in times:
+			button = Button(text = "Jump to : " + i, size_hint =(0.75,0.15))
+			self.times_column.add_widget(button)
+			button.bind(on_press = lambda x,i=i : self.play_to_pos(i))
+		if not self.toggleJumps:
+			self.main_layout.add_widget(self.times_column)			
+			self.toggleJumps = True
+	
+	def play_to_pos(self, time):
+		print time
+		self.video_player.seek(float(time)/self.video_player.duration)
+		self.video_player.state = 'play'	
+		
 	def toQueryBuilder(self, obj):
 		self.change_screen('QueryBuilderScreen')
 class QBApp(App):
