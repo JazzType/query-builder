@@ -9,7 +9,7 @@
 		transition: sm.NoTransition()
 		id: screen_manager
 		#QueryBuilderScreen
-		Screen:	
+		Screen:
 			name: 'QueryBuilderScreen'
 			BoxLayout:				
 				orientation: 'horizontal'
@@ -17,29 +17,6 @@
 				id: mainlayout
 				qb_button: qbbutton
 				next_button: nextbutton
-				BoxLayout:
-					size_hint: (0.1, 1)
-					orientation: 'vertical'	
-					Label:
-						text: 'Tournament'
-						size_hint: (1, 0.1)
-						border: (0, 0, 1, 0)
-						foreground_color: (246, 248, 250, 1)
-					Image:
-						source: '/home/akash/Kivy/A/images/fifa_wc2014_logo.png'
-						border: (None, None, None, None)
-						size_hint: (1, 0.5)				
-					BoxLayout:
-						size_hint: (1, 0.4)
-						orientation: 'vertical'
-						Label:
-							text: 'Sub-events'
-						BoxLayout:
-							orientation: 'horizontal'
-							Label:
-								text: 'Kicking'
-							Label:
-								text: 'Catching'
 
 				BoxLayout:
 					canvas.before:
@@ -61,17 +38,20 @@
 					Button:
 						text: 'Build a Query'
 						id: qbbutton
-						on_press: root.update_button()						
+						on_press: root.update_button()
 						size_hint: (1, 0.05)
 						background_normal: ''
-						background_color: (0, 255, 255, 1)
+						background_color: (255, 165, 0, 1)
+						color: (0, 0, 0, 1)
 
-						
 					Button:
 						text: 'Next'						
 						id: nextbutton
 						on_press: root.change_screen('ResultScreen')
-						size_hint: (1,0.05)						
+						size_hint: (1,0.05)
+						background_normal: ''
+						background_color: (255, 165, 0, 1)
+						color: (0, 0, 0, 1)
 
 		#ResultScreen
 		Screen:

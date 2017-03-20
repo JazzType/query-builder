@@ -12,7 +12,7 @@ from kivy.cache import Cache
 from kivy.atlas import Atlas
 
 class QueryBuilder(BoxLayout):
-	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "aditya"))
+	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "password"))
 	session = driver.session()	
 	qb_button = ObjectProperty()
 	next_button = ObjectProperty()
@@ -20,11 +20,11 @@ class QueryBuilder(BoxLayout):
 	toggleColumn = False
 	toggleJumps = False
 	video_player = ObjectProperty()
-	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 1))
+	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 0.35))
 	times_column = BoxLayout(orientation = 'vertical',size_hint=(0.1, 1))
 	res_layout = ObjectProperty()
 
-	Label.color = (0, 0, 0, 1)	
+	#Label.color = (0, 0, 0, 1)	
 	#label.border
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
@@ -106,7 +106,7 @@ class QueryBuilder(BoxLayout):
 		self.player_column.add_widget(Label(text='Over: ' + ball))
 		self.player_column.add_widget(Label(text='Runs: ' + runs))
 		if not self.toggleColumn:
-			self.main_layout.add_widget(self.player_column)			
+			self.main_layout.add_widget(self.player_column, len(self.main_layout.children))			
 			self.toggleColumn = True
 		
 	def insert_player_data(self, player_type, player_list):
@@ -127,7 +127,7 @@ class QueryBuilder(BoxLayout):
 		self.res_layout.add_widget(info_column)
 			
 	def insert_clips(self, times):
-		print times
+		print(times)
 		if type(self.times_column) is BoxLayout:
 			self.times_column.clear_widgets()
 		for i in times:
@@ -139,7 +139,7 @@ class QueryBuilder(BoxLayout):
 			self.toggleJumps = True
 	
 	def play_to_pos(self, time):
-		print time
+		print (time)
 		self.video_player.seek(float(time)/self.video_player.duration)
 		self.video_player.state = 'play'	
 		
