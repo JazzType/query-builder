@@ -4,7 +4,7 @@
 	video_player:video_player
 	main_layout: mainlayout
 	res_layout: res_layout
-
+	player_column: player_column
 	ScreenManager:
 		transition: sm.NoTransition()
 		id: screen_manager
@@ -19,15 +19,28 @@
 				next_button: nextbutton
 
 				BoxLayout:
+					padding: [0, 0, 10, 0]
+					size_hint: (0.1, 1)
+					id: player_column
+					orientation: 'vertical'
 					canvas.before:
 						Color:
 							rgba: (246, 248, 250, 1)
 						Rectangle:
 							pos: self.pos
 							size: self.size
+
+				BoxLayout:
 					orientation: 'vertical'
 					size_hint: (0.8, 1)
+					canvas.before:
+						Color:
+							rgba: (246, 248, 250, 1)
+						Rectangle:
+							pos: self.pos
+							size: self.size
 					
+
 					VideoPlayer:
 						id: video_player
 						size_hint: (1, 0.90)
@@ -57,6 +70,12 @@
 		Screen:
 			name: 'ResultScreen'
 			BoxLayout:
+				canvas.before:
+					Color:
+						rgba: (246, 248, 250, 1)
+					Rectangle:
+						pos: self.pos
+						size: self.size				
 				id: res_layout
 				orientation:'horizontal'
 				Button:

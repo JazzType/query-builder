@@ -10,6 +10,10 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from neo4j.v1 import GraphDatabase, basic_auth
 from kivy.cache import Cache
 from kivy.atlas import Atlas
+from kivy.graphics.instructions import Canvas
+from kivy.graphics.context_instructions import Color
+from kivy.graphics import Rectangle
+
 
 class QueryBuilder(BoxLayout):
 	driver = GraphDatabase.driver("bolt://localhost:7687", auth = basic_auth("neo4j", "password"))
@@ -20,12 +24,11 @@ class QueryBuilder(BoxLayout):
 	toggleColumn = False
 	toggleJumps = False
 	video_player = ObjectProperty()
-	player_column = BoxLayout(orientation='vertical', size_hint=(0.1, 0.35))
-	times_column = BoxLayout(orientation = 'vertical',size_hint=(0.1, 1))
-	res_layout = ObjectProperty()
+	player_column = ObjectProperty()
+	times_column = BoxLayout(orientation = 'vertical',size_hint=(0.1, 0.65))
+	res_layout = ObjectProperty()	
+	
 
-	#Label.color = (0, 0, 0, 1)	
-	#label.border
 	def binary_search(self, tuple_array, pause_time):
 		low = 0
 		high = len(tuple_array)
@@ -99,28 +102,28 @@ class QueryBuilder(BoxLayout):
 		self.screen_manager.current = screen_name
 		
 	def insert_players(self, player_list, ball, runs):		
-		if type(self.player_column) is BoxLayout:
-				self.player_column.clear_widgets()						
-		self.player_column.add_widget(Label(text='Batsman: ' + str(player_list[0])))
-		self.player_column.add_widget(Label(text='Bowler: ' + str(player_list[1])))
-		self.player_column.add_widget(Label(text='Over: ' + ball))
-		self.player_column.add_widget(Label(text='Runs: ' + runs))
-		if not self.toggleColumn:
-			self.main_layout.add_widget(self.player_column, len(self.main_layout.children))			
-			self.toggleColumn = True
+		#if type(self.player_column) is BoxLayout:
+		self.player_column.clear_widgets()						
+		self.player_column.add_widget(Label(text='Batsman: ' + str(player_list[0]), color=(0, 0, 0, 1)))
+		self.player_column.add_widget(Label(text='Bowler: ' + str(player_list[1]), color=(0, 0, 0, 1)))
+		self.player_column.add_widget(Label(text='Over: ' + ball, color=(0, 0, 0, 1)))
+		self.player_column.add_widget(Label(text='Runs: ' + runs, color=(0, 0, 0, 1)))
+		#if not self.toggleColumn:
+		#	self.main_layout.add_widget(self.player_column, len(self.main_layout.children))			
+		#	self.toggleColumn = True
 		
 	def insert_player_data(self, player_type, player_list):
 		stats_column = BoxLayout(orientation = "vertical")
-		stats_column.add_widget(Label(text = player_type + " of the Match"))
-		stats_column.add_widget(Label(text = "Best " + player_type + " for RCB : " + player_list[0]))
-		stats_column.add_widget(Label(text = "Best " + player_type +" for CSK : " + player_list[1]))
-		self.res_layout.add_widget(stats_column)
+		stats_column.add_widget(Label(text = player_type + " of the Match", color=(0, 0, 0, 1)))
+		stats_column.add_widget(Label(text = "Best " + player_type + " for RCB : " + player_list[0], color=(0, 0, 0, 1)))
+		stats_column.add_widget(Label(text = "Best " + player_type +" for CSK : " + player_list[1], color=(0, 0, 0, 1)))
+		self.res_layout.add_widget(widget=stats_column)
 		
 	def insert_info(self, time_tuple, players, ball):
 		info_column = BoxLayout(orientation = "vertical")
-		info_column.add_widget(Label(text = "Over : " + ball, size_hint=(1, 0.25)))
-		info_column.add_widget(Label(text = "Batsman : " + players[0] + " - Bowler : " + players[1], size_hint=(1, 0.30)))
-		info_column.add_widget(Label(text = "Event Timestamps : "  + str(time_tuple[0]) + " - " + str(time_tuple[1]), size_hint=(1, 0.30)))
+		info_column.add_widget(Label(text = "Over : " + ball, size_hint=(1, 0.25), color=(0, 0, 0, 1)))
+		info_column.add_widget(Label(text = "Batsman : " + players[0] + " - Bowler : " + players[1], size_hint=(1, 0.30), color=(0, 0, 0, 1)))
+		info_column.add_widget(Label(text = "Event Timestamps : "  + str(time_tuple[0]) + " - " + str(time_tuple[1]), size_hint=(1, 0.30), color=(0, 0, 0, 1)))
 		backBtn = Button(text='Go Back', size_hint=(1, 0.05))
 		backBtn.bind(on_press=self.toQueryBuilder)
 		info_column.add_widget(backBtn)
@@ -130,8 +133,9 @@ class QueryBuilder(BoxLayout):
 		print(times)
 		if type(self.times_column) is BoxLayout:
 			self.times_column.clear_widgets()
+		y_hint = 1/len(times)
 		for i in times:
-			button = Button(text = "Jump to : " + i, size_hint =(0.75,0.15))
+			button = Button(text = "Jump to : " + i, size_hint =(1,y_hint))
 			self.times_column.add_widget(button)
 			button.bind(on_press = lambda x,i=i : self.play_to_pos(i))
 		if not self.toggleJumps:
