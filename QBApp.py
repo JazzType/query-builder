@@ -64,11 +64,11 @@ class QueryBuilder(BoxLayout):
 		self.insert_players(players,ball,runs,over, runs_list, ball_times)
 			
 	def get_best_batsmen(self, time_tuple):
-		batsmen = self.session.run('MATCH (n) WHERE EXISTS(n.BestBatsman) RETURN DISTINCT "node" as element, n.BestBatsman AS BestBatsman LIMIT 25 UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.BestBatsman) RETURN DISTINCT "relationship" AS element, r.BestBatsman AS BestBatsman LIMIT 25')
+		batsmen = self.session.run('MATCH (n) WHERE EXISTS(n.BestBatsman) RETURN DISTINCT "node" as element, n.BestBatsman AS BestBatsman')
 		self.insert_player_data('Batsmen', [str(record['BestBatsman']) for record in batsmen])
 			
 	def get_best_bowlers(self, time_tuple):
-		bowlers = self.session.run('MATCH (n) WHERE EXISTS(n.BestBowler) RETURN DISTINCT "node" as element, n.BestBowler AS BestBowler LIMIT 25 UNION ALL MATCH ()-[r]-() WHERE EXISTS(r.BestBowler) RETURN DISTINCT "relationship" AS element, r.BestBowler AS BestBowler LIMIT 25')
+		bowlers = self.session.run('MATCH (n) WHERE EXISTS(n.BestBowler) RETURN DISTINCT "node" as element, n.BestBowler AS BestBowler')
 			
 		self.insert_player_data('Bowlers',[str(record['BestBowler']) for record in bowlers])
 	
