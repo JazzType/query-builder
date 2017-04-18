@@ -1,7 +1,31 @@
-screenmanager
-screen
-boxlayout
-label
-image
-videoplayer
-button
+<QueryBuilder>(Root):
+  ScreenManager:
+    Screen:(QBScreen):
+      BoxLayout:
+        BoxLayout:
+          Label:
+          Image:
+          BoxLayout:
+            Label:
+            BoxLayout:
+              Label:
+              Label:
+        BoxLayout:
+          VideoPlayer:
+          Button:
+          Button:
+    Screen(ResScreen):
+      BoxLayout:
+        Button:
+
+
+Distinct Widgets:
+
+Root:
+ScreenManager
+Screen
+BoxLayout
+Label
+Image
+VideoPlayer
+Button
