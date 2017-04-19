@@ -6,7 +6,7 @@ do
 	echo "Now finding image dependencies for $widget"
 	widget_file=$(echo /usr/lib/python3.6/site-packages/kivy/uix/$widget.py)
 	echo $widget >> requirements.txt
-	grep -o -e"atlas://data/images/defaulttheme/[a-z_\-]*" $widget_file >> requirements.txt
+	grep "atlas://data/images/defaulttheme" $widget_file >> requirements.txt
 	echo "-----" >> requirements.txt
 	echo "Done finding images for $widget"
 done < "$1"

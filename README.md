@@ -11,4 +11,3 @@ To install Kivy, execute (On Arch Linux)
 or your distro equivalent package.
 
 ####Python 3.x is recommended
------------------------------------------------
